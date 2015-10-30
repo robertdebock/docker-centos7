@@ -4,12 +4,12 @@ services:
 - docker
 
 script:
-- docker build -t robertdebock:docker-centos .
+- docker build -t robertdebock:docker-centos7 .
 - docker images
-- docker tag $(docker images | awk '$2 == "docker-centos" { print $3 }') robertdebock/docker-centos
+- docker tag $(docker images | awk '$2 == "docker-centos7" { print $3 }') robertdebock/docker-centos7
 - docker images
 - docker login -e="$DOCKEREMAIL" -u="$DOCKERUSERNAME" -p="$DOCKERPASSWORD"
-- docker push robertdebock/docker-centos
+- docker push robertdebock/docker-centos7
 
 notifications:
   email: false
