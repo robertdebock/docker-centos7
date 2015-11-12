@@ -3,13 +3,18 @@ sudo: required
 services:
 - docker
 
+env:
+  global:
+    - PUBLISHER="robertdebock"
+    - IMAGENAME="docker-centos7-full"
+
 script:
-- docker build -t robertdebock:docker-centos7 .
+- docker build -t ${PUBLISHER}:${IMAGENAME} .
 - docker images
-- docker tag $(docker images | awk '$2 == "docker-centos7" { print $3 }') robertdebock/docker-centos7
+- docker tag $(docker images | awk '$2 == '\"${IMAGENAME}\"' { print $3 }') ${PUBLISHER}/${IMAGENAME}
 - docker images
 - docker login -e="$DOCKEREMAIL" -u="$DOCKERUSERNAME" -p="$DOCKERPASSWORD"
-- docker push robertdebock/docker-centos7
+- docker push ${PUBLISHER}/${IMAGENAME}
 
 notifications:
   email: false
